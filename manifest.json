@@ -1,7 +1,8 @@
 {
   "name": "Strategic Command",
   "short_name": "Strategic",
-  "start_url": ".",
+  "start_url": "/strategic-command-app/",
+  "scope": "/strategic-command-app/",
   "display": "standalone",
   "background_color": "#0B1020",
   "theme_color": "#1a237e",
