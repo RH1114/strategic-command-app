@@ -1,6 +1,7 @@
 {
   "name": "Strategic Command",
   "short_name": "Strategic",
+  "id": "/strategic-command-app/",
   "start_url": "/strategic-command-app/",
   "scope": "/strategic-command-app/",
   "display": "standalone",
