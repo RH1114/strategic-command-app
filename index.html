@@ -8,6 +8,8 @@
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#0a0f2c">
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <style>
     body {
       margin: 0;
@@ -17,7 +19,7 @@
       animation: fondo 15s ease infinite;
       color: white;
       text-align: center;
-      padding-top: 100px;
+      padding-top: 80px;
     }
 
     @keyframes fondo {
@@ -26,9 +28,17 @@
       100% { background-position: 0% 50%; }
     }
 
+    input {
+      padding: 12px;
+      margin: 8px;
+      width: 250px;
+      border-radius: 6px;
+      border: none;
+    }
+
     button {
-      padding: 15px 30px;
-      font-size: 18px;
+      padding: 12px 25px;
+      font-size: 16px;
       border: none;
       border-radius: 8px;
       margin: 10px;
@@ -44,18 +54,57 @@
 
   <h1>Strategic Command</h1>
 
-  <button class="btn1">Iniciar</button>
-  <button class="btn2">Opciones</button>
+  <div id="auth">
+    <input type="email" id="email" placeholder="Correo">
+    <br>
+    <input type="password" id="password" placeholder="Contraseña">
+    <br>
+    <button class="btn1" onclick="login()">Iniciar sesión</button>
+    <button class="btn2" onclick="register()">Registrarse</button>
+  </div>
 
   <script>
+    const { createClient } = supabase;
+
+    const supabaseClient = createClient(
+      "PEGA_AQUI_TU_PROJECT_URL",
+      "PEGA_AQUI_TU_ANON_PUBLIC_KEY"
+    );
+
+    async function register() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      const { data, error } = await supabaseClient.auth.signUp({
+        email: email,
+        password: password
+      });
+
+      if (error) {
+        alert(error.message);
+      } else {
+        alert("Registro exitoso. Revisa tu correo.");
+      }
+    }
+
+    async function login() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      const { data, error } = await supabaseClient.auth.signInWithPassword({
+        email: email,
+        password: password
+      });
+
+      if (error) {
+        alert(error.message);
+      } else {
+        alert("Login exitoso");
+      }
+    }
+
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('service-worker.js')
-        .then(function(reg) {
-          console.log("Service Worker registrado");
-        })
-        .catch(function(err) {
-          console.log("Error:", err);
-        });
+      navigator.serviceWorker.register('service-worker.js');
     }
   </script>
 
