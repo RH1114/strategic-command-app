@@ -1,26 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>Strategic Command</title>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-</head>
-<body>
-
-<h1>Strategic Command</h1>
-
-<div id="login">
-  <input type="email" id="email" placeholder="Correo">
-  <input type="password" id="password" placeholder="Contraseña">
-  <button onclick="login()">Iniciar sesión</button>
-</div>
-
-<div id="panel" style="display:none;">
-  <h2>Panel Privado</h2>
-  <p id="userInfo"></p>
-  <button onclick="logout()">Cerrar sesión</button>
-</div>
-
 <script>
   const supabase = window.supabase.createClient(
     "https://ynddzitxwddgmxfhdmru.supabase.co",
@@ -28,8 +5,8 @@
   );
 
   async function login() {
-  alert("Funciona el botón");
-  }
+    alert("Funciona el botón");
+
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
 
@@ -62,6 +39,3 @@
 
   loadUser();
 </script>
-
-</body>
-</html>
