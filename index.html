@@ -67,8 +67,8 @@
     const { createClient } = supabase;
 
     const supabaseClient = createClient(
-      "PEGA_AQUI_TU_PROJECT_URL",
-      "PEGA_AQUI_TU_ANON_PUBLIC_KEY"
+      "https://ynddzitxwddgmxfhdmru.supabase.co",
+      "sb_publishable_1RLUVi5PCkOklX5Y3HOoIw_gMmb_use"
     );
 
     async function register() {
@@ -83,7 +83,7 @@
       if (error) {
         alert(error.message);
       } else {
-        alert("Registro exitoso. Revisa tu correo.");
+        alert("Registro exitoso. Si activaste confirmación por email, revisa tu correo.");
       }
     }
 
@@ -100,6 +100,7 @@
         alert(error.message);
       } else {
         alert("Login exitoso");
+        console.log("Usuario:", data.user);
       }
     }
 
