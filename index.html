@@ -19,7 +19,7 @@
       animation: fondo 15s ease infinite;
       color: white;
       text-align: center;
-      padding-top: 80px;
+      padding-top: 60px;
     }
 
     @keyframes fondo {
@@ -29,24 +29,21 @@
     }
 
     input {
-      padding: 12px;
-      margin: 8px;
-      width: 250px;
+      padding: 10px;
+      margin: 5px;
       border-radius: 6px;
       border: none;
     }
 
     button {
-      padding: 12px 25px;
-      font-size: 16px;
+      padding: 10px 20px;
+      border-radius: 6px;
       border: none;
-      border-radius: 8px;
-      margin: 10px;
       cursor: pointer;
+      margin: 5px;
     }
 
-    .btn1 { background: #4CAF50; color: white; }
-    .btn2 { background: #2196F3; color: white; }
+    .hidden { display: none; }
   </style>
 </head>
 
@@ -56,58 +53,91 @@
 
   <div id="auth">
     <input type="email" id="email" placeholder="Correo">
-    <br>
     <input type="password" id="password" placeholder="Contraseña">
     <br>
-    <button class="btn1" onclick="login()">Iniciar sesión</button>
-    <button class="btn2" onclick="register()">Registrarse</button>
+    <button onclick="login()">Iniciar sesión</button>
+    <button onclick="register()">Registrarse</button>
   </div>
 
-  <script>
-    const { createClient } = supabase;
+  <div id="app" class="hidden">
+    <h2>Panel Privado</h2>
+    <p id="userEmail"></p>
+    <p id="userRole"></p>
+    <button onclick="logout()">Cerrar sesión</button>
+  </div>
 
-    const supabaseClient = createClient(
-      "https://ynddzitxwddgmxfhdmru.supabase.co",
-      "sb_publishable_1RLUVi5PCkOklX5Y3HOoIw_gMmb_use"
-    );
+<script>
+  const supabase = window.supabase.createClient(
+    "https://ynddzitxwddgmxfhdmru.supabase.co",
+    "sb_publishable_1RLUVi5PCkOklX5Y3HOoIw_gMmb_use"
+  );
 
-    async function register() {
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
+  async function checkSession() {
+    const { data: { session } } = await supabase.auth.getSession();
 
-      const { data, error } = await supabaseClient.auth.signUp({
-        email: email,
-        password: password
-      });
-
-      if (error) {
-        alert(error.message);
-      } else {
-        alert("Registro exitoso. Si activaste confirmación por email, revisa tu correo.");
-      }
+    if (session) {
+      showApp(session.user);
     }
+  }
 
-    async function login() {
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
+  async function login() {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
 
-      const { data, error } = await supabaseClient.auth.signInWithPassword({
-        email: email,
-        password: password
-      });
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password
+    });
 
-      if (error) {
-        alert(error.message);
-      } else {
-        alert("Login exitoso");
-        console.log("Usuario:", data.user);
-      }
+    if (error) {
+      alert(error.message);
+    } else {
+      checkSession();
     }
+  }
 
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('service-worker.js');
+  async function register() {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    const { error } = await supabase.auth.signUp({
+      email,
+      password
+    });
+
+    if (error) {
+      alert(error.message);
+    } else {
+      alert("Registro exitoso. Revisa tu correo si es necesario.");
     }
-  </script>
+  }
+
+  async function showApp(user) {
+    document.getElementById("auth").classList.add("hidden");
+    document.getElementById("app").classList.remove("hidden");
+
+    document.getElementById("userEmail").innerText = "Correo: " + user.email;
+
+    const { data, error } = await supabase
+      .from("profiles")
+      .select("role")
+      .eq("id", user.id)
+      .single();
+
+    if (data) {
+      document.getElementById("userRole").innerText = "Rol: " + data.role;
+    } else {
+      document.getElementById("userRole").innerText = "Rol no encontrado";
+    }
+  }
+
+  async function logout() {
+    await supabase.auth.signOut();
+    location.reload();
+  }
+
+  checkSession();
+</script>
 
 </body>
 </html>
