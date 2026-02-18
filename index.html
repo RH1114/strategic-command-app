@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Strategic Command</title>
-  <script src="https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
@@ -19,12 +19,24 @@
   <h2>Panel Privado</h2>
   <p id="userInfo"></p>
   <button onclick="logout()">Cerrar sesión</button>
+
+  <hr>
+
+  <h3>Nueva Estrategia</h3>
+  <input type="text" id="titulo" placeholder="Título">
+  <br><br>
+  <textarea id="descripcion" placeholder="Descripción"></textarea>
+  <br><br>
+  <button onclick="guardarEstrategia()">Guardar</button>
+
+  <hr>
+
+  <h3>Mis Estrategias</h3>
+  <ul id="listaEstrategias"></ul>
 </div>
 
 <script>
-  const { createClient } = supabase;
-
-  const supabaseClient = createClient(
+  const supabase = window.supabase.createClient(
     "https://ynddzitxwddgmxfhdmru.supabase.co",
     "sb_publishable_1RLUVi5PCkOklX5Y3HOoIw_gMmb_use"
   );
@@ -33,7 +45,7 @@
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
 
-    const { data, error } = await supabaseClient.auth.signInWithPassword({
+    const { error } = await supabase.auth.signInWithPassword({
       email,
       password
     });
@@ -47,17 +59,66 @@
   }
 
   async function loadUser() {
-    const { data: { user } } = await supabaseClient.auth.getUser();
+    const { data: { user } } = await supabase.auth.getUser();
     if (!user) return;
 
     document.getElementById("login").style.display = "none";
     document.getElementById("panel").style.display = "block";
     document.getElementById("userInfo").innerText = "Correo: " + user.email;
+
+    cargarEstrategias();
   }
 
   async function logout() {
-    await supabaseClient.auth.signOut();
+    await supabase.auth.signOut();
     location.reload();
+  }
+
+  async function guardarEstrategia() {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
+
+    const titulo = document.getElementById("titulo").value;
+    const descripcion = document.getElementById("descripcion").value;
+
+    const { error } = await supabase.from("estrategias").insert([
+      {
+        user_id: user.id,
+        titulo: titulo,
+        descripcion: descripcion
+      }
+    ]);
+
+    if (error) {
+      alert(error.message);
+      return;
+    }
+
+    document.getElementById("titulo").value = "";
+    document.getElementById("descripcion").value = "";
+
+    cargarEstrategias();
+  }
+
+  async function cargarEstrategias() {
+    const { data, error } = await supabase
+      .from("estrategias")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      console.log(error);
+      return;
+    }
+
+    const lista = document.getElementById("listaEstrategias");
+    lista.innerHTML = "";
+
+    data.forEach(item => {
+      const li = document.createElement("li");
+      li.innerHTML = "<strong>" + item.titulo + "</strong><br>" + item.descripcion;
+      lista.appendChild(li);
+    });
   }
 
   loadUser();
