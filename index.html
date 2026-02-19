@@ -77,7 +77,34 @@
   }
 
   async function guardarEstrategia() {
-    async function eliminarEstrategia(id) {
+
+  const { data: { user } } = await client.auth.getUser();
+  if (!user) return;
+
+  const titulo = document.getElementById("titulo").value;
+  const descripcion = document.getElementById("descripcion").value;
+
+  const { error } = await client.from("estrategias").insert([
+    {
+      user_id: user.id,
+      titulo: titulo,
+      descripcion: descripcion
+    }
+  ]);
+
+  if (error) {
+    alert(error.message);
+    return;
+  }
+
+  document.getElementById("titulo").value = "";
+  document.getElementById("descripcion").value = "";
+
+  cargarEstrategias();
+}
+
+
+async function eliminarEstrategia(id) {
   const confirmacion = confirm("¿Eliminar esta estrategia?");
   if (!confirmacion) return;
 
@@ -93,69 +120,42 @@
 
   cargarEstrategias();
 }
-    const { data: { user } } = await client.auth.getUser();
-    if (!user) return;
 
-    const titulo = document.getElementById("titulo").value;
-    const descripcion = document.getElementById("descripcion").value;
 
-    const { error } = await client.from("estrategias").insert([
-      {
-        user_id: user.id,
-        titulo: titulo,
-        descripcion: descripcion
-      }
-    ]);
+async function cargarEstrategias() {
+  const { data, error } = await client
+    .from("estrategias")
+    .select("*")
+    .order("created_at", { ascending: false });
 
-    if (error) {
-      alert(error.message);
-      return;
-    }
-
-    document.getElementById("titulo").value = "";
-    document.getElementById("descripcion").value = "";
-
-    cargarEstrategias();
+  if (error) {
+    console.log(error);
+    return;
   }
 
-  async function cargarEstrategias() {
-    const { data, error } = await client
-      .from("estrategias")
-      .select("*")
-      .order("created_at", { ascending: false });
+  const lista = document.getElementById("listaEstrategias");
+  lista.innerHTML = "";
 
-    if (error) {
-      console.log(error);
-      return;
-    }
+  data.forEach(item => {
+    const li = document.createElement("li");
 
-    const lista = document.getElementById("listaEstrategias");
-    lista.innerHTML = "";
+    li.innerHTML = `
+      <strong>${item.titulo}</strong><br>
+      ${item.descripcion}<br>
+      <button class="btn-eliminar" data-id="${item.id}">Eliminar</button>
+      <hr>
+    `;
 
-    data.forEach(item => {
-  const li = document.createElement("li");
-
-  li.innerHTML = `
-    <strong>${item.titulo}</strong><br>
-    ${item.descripcion}<br>
-    <button class="btn-eliminar" data-id="${item.id}">Eliminar</button>
-    <hr>
-  `;
-
-  lista.appendChild(li);
-});
-
-// Conectar los botones después de crearlos
-document.querySelectorAll(".btn-eliminar").forEach(boton => {
-  boton.addEventListener("click", function () {
-    const id = this.getAttribute("data-id");
-    eliminarEstrategia(id);
+    lista.appendChild(li);
   });
-});
-  }
 
-  loadUser();
-</script>
+  document.querySelectorAll(".btn-eliminar").forEach(boton => {
+    boton.addEventListener("click", function () {
+      const id = this.getAttribute("data-id");
+      eliminarEstrategia(id);
+    });
+  });
+}
 
-</body>
-</html>
+loadUser();
+  
