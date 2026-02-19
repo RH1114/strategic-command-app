@@ -134,13 +134,23 @@
 
     data.forEach(item => {
   const li = document.createElement("li");
+
   li.innerHTML = `
     <strong>${item.titulo}</strong><br>
     ${item.descripcion}<br>
-    <button onclick="eliminarEstrategia('${item.id}')">Eliminar</button>
+    <button class="btn-eliminar" data-id="${item.id}">Eliminar</button>
     <hr>
   `;
+
   lista.appendChild(li);
+});
+
+// Conectar los botones después de crearlos
+document.querySelectorAll(".btn-eliminar").forEach(boton => {
+  boton.addEventListener("click", function () {
+    const id = this.getAttribute("data-id");
+    eliminarEstrategia(id);
+  });
 });
   }
 
