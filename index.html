@@ -117,10 +117,15 @@
     lista.innerHTML = "";
 
     data.forEach(item => {
-      const li = document.createElement("li");
-      li.innerHTML = "<strong>" + item.titulo + "</strong><br>" + item.descripcion;
-      lista.appendChild(li);
-    });
+  const li = document.createElement("li");
+  li.innerHTML = `
+    <strong>${item.titulo}</strong><br>
+    ${item.descripcion}<br>
+    <button onclick="eliminarEstrategia('${item.id}')">Eliminar</button>
+    <hr>
+  `;
+  lista.appendChild(li);
+});
   }
 
   loadUser();
