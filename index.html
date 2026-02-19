@@ -121,7 +121,10 @@ async function eliminarEstrategia(id) {
 
   cargarEstrategias();
 }
-
+async function cerrarSesion() {
+  await client.auth.signOut();
+  location.reload();
+}
 
 async function cargarEstrategias() {
   const { data, error } = await client
