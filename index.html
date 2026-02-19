@@ -28,7 +28,22 @@
   <textarea id="descripcion" placeholder="Descripción"></textarea>
   <br><br>
   <button onclick="guardarEstrategia()">Guardar</button>
+async function eliminarEstrategia(id) {
+  const confirmacion = confirm("¿Eliminar esta estrategia?");
+  if (!confirmacion) return;
 
+  const { error } = await client
+    .from("estrategias")
+    .delete()
+    .eq("id", id);
+
+  if (error) {
+    alert(error.message);
+    return;
+  }
+
+  cargarEstrategias();
+}
   <hr>
 
   <h3>Mis Estrategias</h3>
