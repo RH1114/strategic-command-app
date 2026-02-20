@@ -233,6 +233,8 @@ button:active {
     btnGuardar.removeAttribute("data-editando");
   } 
   // 🔥 SI ES NUEVA ESTRATEGIA
+    document.getElementById("btnGuardar").removeAttribute("data-editando");
+document.getElementById("btnGuardar").textContent = "Guardar";
   else {
     const { error } = await client.from("estrategias").insert([
       {
