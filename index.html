@@ -61,58 +61,40 @@ button {
   cursor: pointer;
   font-weight: 600;
   position: relative;
-  overflow: hidden;
   transition: all 0.2s ease;
-  box-shadow: 
-    inset 0 1px 0 rgba(255,255,255,0.2),  /* brillo interno superior */
-    0 6px 14px rgba(0,0,0,0.4);           /* sombra exterior */
-}
-
-/* EFECTO REFLEJO CURVO TIPO PINTURA */
-button::before {
-  content: "";
-  position: absolute;
-  top: -40%;
-  left: -20%;
-  width: 140%;
-  height: 120%;
-  background: radial-gradient(
-    ellipse at top,
-    rgba(255,255,255,0.35) 0%,
-    rgba(255,255,255,0.15) 35%,
-    rgba(255,255,255,0.05) 55%,
-    transparent 70%
-  );
-  pointer-events: none;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.4);
 }
 
 /* VERDE CONFIRMAR */
 #btnGuardar,
 .btn-editar {
-  background: linear-gradient(to bottom, #48c67c, #2f8f5c);
+  background: linear-gradient(to bottom, #49c77f, #2f8f5c);
   color: white;
+  box-shadow:
+    0 0 0 1px rgba(73,199,127,0.6),
+    0 8px 18px rgba(73,199,127,0.25);
 }
 
 /* ROJO ELIMINAR */
 .btn-eliminar {
-  background: linear-gradient(to bottom, #cf4a4a, #933232);
+  background: linear-gradient(to bottom, #d25555, #933232);
   color: white;
+  box-shadow:
+    0 0 0 1px rgba(210,85,85,0.6),
+    0 8px 18px rgba(210,85,85,0.25);
 }
 
 /* HOVER */
 button:hover {
   transform: translateY(-2px);
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.3),
-    0 10px 18px rgba(0,0,0,0.45);
+    0 0 8px rgba(255,255,255,0.15),
+    0 10px 22px rgba(0,0,0,0.5);
 }
 
 /* CLICK */
 button:active {
   transform: translateY(1px);
-  box-shadow:
-    inset 0 2px 4px rgba(0,0,0,0.4),
-    0 4px 8px rgba(0,0,0,0.35);
 }
 
   </style>
