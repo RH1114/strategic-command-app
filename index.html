@@ -57,39 +57,49 @@ input, textarea {
 button {
   padding: 10px 16px;
   border-radius: 10px;
-  border: none;
+  border: 1px solid rgba(212, 175, 55, 0.4); /* dorado sutil MCOC */
   cursor: pointer;
   font-weight: 600;
   position: relative;
+  overflow: hidden;
   transition: all 0.2s ease;
-  box-shadow: 0 6px 14px rgba(0,0,0,0.4);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.45);
+}
+
+/* EFECTO LUZ SOLO ARRIBA */
+button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 45%;
+  background: linear-gradient(
+    rgba(255,255,255,0.25),
+    rgba(255,255,255,0.05)
+  );
+  pointer-events: none;
 }
 
 /* VERDE CONFIRMAR */
 #btnGuardar,
 .btn-editar {
-  background: linear-gradient(to bottom, #49c77f, #2f8f5c);
+  background: linear-gradient(to bottom, #3dbd76, #1f5e3f);
   color: white;
-  box-shadow:
-    0 0 0 1px rgba(73,199,127,0.6),
-    0 8px 18px rgba(73,199,127,0.25);
 }
 
 /* ROJO ELIMINAR */
 .btn-eliminar {
-  background: linear-gradient(to bottom, #d25555, #933232);
+  background: linear-gradient(to bottom, #c54848, #6b2323);
   color: white;
-  box-shadow:
-    0 0 0 1px rgba(210,85,85,0.6),
-    0 8px 18px rgba(210,85,85,0.25);
 }
 
 /* HOVER */
 button:hover {
   transform: translateY(-2px);
-  box-shadow:
-    0 0 8px rgba(255,255,255,0.15),
-    0 10px 22px rgba(0,0,0,0.5);
+  box-shadow: 
+    0 0 0 1px rgba(212,175,55,0.6),
+    0 10px 20px rgba(0,0,0,0.5);
 }
 
 /* CLICK */
