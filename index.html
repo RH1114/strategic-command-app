@@ -53,6 +53,37 @@ input, textarea {
   border: 1px solid var(--borde-suave);
   list-style: none;
 }
+    /* BOTÓN GENERAL */
+button {
+  padding: 10px 16px;
+  border-radius: var(--radio);
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+
+/* BOTÓN GUARDAR / EDITAR (VERDE) */
+#btnGuardar,
+.btn-editar {
+  background: #2e7d4f; /* verde elegante confirmación */
+  color: #ffffff;
+}
+
+#btnGuardar:hover,
+.btn-editar:hover {
+  background: #379d63;
+}
+
+/* BOTÓN ELIMINAR (ROJO) */
+.btn-eliminar {
+  background: #8f2f2f; /* rojo sobrio */
+  color: #ffffff;
+}
+
+.btn-eliminar:hover {
+  background: #b23a3a;
+}
   </style>
 </head>
 <body>
