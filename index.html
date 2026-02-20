@@ -324,6 +324,7 @@ async function cargarEstrategias() {
     document.getElementById("descripcion").value = estrategia.descripcion;
 
     document.getElementById("btnGuardar").setAttribute("data-editando", id);
+    document.getElementById("btnGuardar").textContent = "Actualizar";
   });
 });
   
