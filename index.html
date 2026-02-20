@@ -4,6 +4,56 @@
   <meta charset="UTF-8">
   <title>Strategic Command</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+:root {
+  --fondo: #1e2228;
+  --panel: #2b3138;
+  --texto: #e6edf3;
+  --borde-suave: #3a414a;
+  --radio: 8px;
+  --sombra: 0 6px 18px rgba(0, 0, 0, 0.45);
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  background: var(--fondo);
+  color: var(--texto);
+}
+
+/* PANEL PRINCIPAL */
+#panel {
+  background: var(--panel);
+  padding: 25px;
+  border-radius: var(--radio);
+  max-width: 700px;
+  margin: 40px auto;
+  box-shadow: var(--sombra);
+  border: 1px solid var(--borde-suave);
+}
+
+/* Inputs */
+input, textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 8px;
+  margin-bottom: 15px;
+  border-radius: var(--radio);
+  border: 1px solid var(--borde-suave);
+  background: #242a31;
+  color: var(--texto);
+}
+
+/* Lista estrategias */
+#listaEstrategias li {
+  background: #242a31;
+  padding: 15px;
+  border-radius: var(--radio);
+  margin-bottom: 15px;
+  border: 1px solid var(--borde-suave);
+  list-style: none;
+}
+  </style>
 </head>
 <body>
 
