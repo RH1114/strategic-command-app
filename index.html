@@ -299,18 +299,7 @@ async function cargarEstrategias() {
     document.getElementById("btnGuardar").setAttribute("data-editando", id);
   });
 });
-  document.querySelectorAll(".btn-editar").forEach(boton => {
-  boton.addEventListener("click", function () {
-    const id = this.getAttribute("data-id");
-
-    const estrategia = data.find(e => e.id === id);
-
-    document.getElementById("titulo").value = estrategia.titulo;
-    document.getElementById("descripcion").value = estrategia.descripcion;
-
-    document.getElementById("btnGuardar").setAttribute("data-editando", id);
-  });
-});
+  
 }
 
 loadUser();
