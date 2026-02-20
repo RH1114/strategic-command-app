@@ -53,37 +53,43 @@ input, textarea {
   border: 1px solid var(--borde-suave);
   list-style: none;
 }
-    /* BOTÓN GENERAL */
+/* BOTÓN GENERAL */
 button {
   padding: 10px 16px;
-  border-radius: var(--radio);
+  border-radius: 8px;
   border: none;
   cursor: pointer;
   font-weight: 600;
-  transition: 0.2s ease;
+  transition: all 0.2s ease;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.35);
 }
 
-/* BOTÓN GUARDAR / EDITAR (VERDE) */
+/* VERDE CONFIRMAR */
 #btnGuardar,
 .btn-editar {
-  background: #2e7d4f; /* verde elegante confirmación */
+  background: linear-gradient(to bottom, #3aa76d, #2f8f5c);
   color: #ffffff;
 }
 
 #btnGuardar:hover,
 .btn-editar:hover {
-  background: #379d63;
+  background: linear-gradient(to bottom, #46c17f, #369e68);
+  box-shadow: 0 0 10px rgba(70, 193, 127, 0.4);
+  transform: translateY(-1px);
 }
 
-/* BOTÓN ELIMINAR (ROJO) */
+/* ROJO ELIMINAR */
 .btn-eliminar {
-  background: #8f2f2f; /* rojo sobrio */
+  background: linear-gradient(to bottom, #b14444, #8f2f2f);
   color: #ffffff;
 }
 
 .btn-eliminar:hover {
-  background: #b23a3a;
+  background: linear-gradient(to bottom, #cc4f4f, #a33939);
+  box-shadow: 0 0 10px rgba(204, 79, 79, 0.4);
+  transform: translateY(-1px);
 }
+
   </style>
 </head>
 <body>
