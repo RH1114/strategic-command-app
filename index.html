@@ -108,17 +108,17 @@ button:active {
 }
 #listaEstrategias li {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 15px;
+  flex-direction: column;   /* texto arriba */
+  gap: 12px;                /* espacio entre texto y botones */
 }
 
 .contenido-estrategia {
-  flex: 1;
+  width: 100%;
 }
 
 .acciones-estrategia {
   display: flex;
+  justify-content: flex-end; /* botones a la derecha */
   gap: 8px;
 }
   </style>
