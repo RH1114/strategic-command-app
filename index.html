@@ -220,6 +220,7 @@ button:active {
 
   // 🔥 SI ESTAMOS EDITANDO
   if (idEditando) {
+
     const { error } = await client
       .from("estrategias")
       .update({ titulo, descripcion })
@@ -230,12 +231,12 @@ button:active {
       return;
     }
 
-    btnGuardar.removeAttribute("data-editando");
-  } 
-  // 🔥 SI ES NUEVA ESTRATEGIA
+    // Restaurar botón después de actualizar
     document.getElementById("btnGuardar").removeAttribute("data-editando");
-document.getElementById("btnGuardar").textContent = "Guardar";
-  else {
+    document.getElementById("btnGuardar").textContent = "Guardar";
+
+} else {
+
     const { error } = await client.from("estrategias").insert([
       {
         user_id: user.id,
